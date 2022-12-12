@@ -1,21 +1,27 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import Loading from "../components/Loading"
 import { LIGHTGRAY, LIGHTYELLOW, DARKGRAY, DARKYELLOW, LIGHTGREEN } from "../constants/COLORS"
 
-export default function SeatPage() {
+export default function SeatPage({ movieInfo, setMovieInfo }) {
     const [seats, seatSeats] = useState(undefined)
     const [selected, setSelected] = useState([])
     const [cpf, setCpf] = useState("")
     const [name, setName] = useState("")
     const { idSession } = useParams()
+    const navigate = useNavigate()
 
     useEffect(() => {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSession}/seats`)
             .then(res => {
                 seatSeats(res.data.seats)
+                const weekday = res.data.day.weekday
+                const date = res.data.day.date
+                const sessionTime = res.data.name
+                const movieTitle = res.data.movie.title
+                setMovieInfo({ movieTitle, weekday, sessionTime, date })
             })
             .catch(console.log)
     }, [])
@@ -28,6 +34,20 @@ export default function SeatPage() {
         } else {
             setSelected([...selected, seat.id])
         }
+    }
+    function bookSeats(event) {
+        event.preventDefault()
+        const body = {
+            ids: selected,
+            name,
+            cpf
+        }
+        const seatsNumbers = seats.filter(s => selected.includes(s.id)).map((s) => s.name)
+        setMovieInfo({ ...body, seatsNumbers, ...movieInfo })
+        const link = "https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many"
+        axios.post(link, body)
+            .then(()=> navigate(`/sucesso`))
+            .catch(console.log)
     }
 
     return (
@@ -51,10 +71,7 @@ export default function SeatPage() {
                     <p>Indisponível</p>
                 </div>
             </LegendSeats>
-            <FormStyled onSubmit={e => {
-                e.preventDefault()
-                console.log(e.target)
-            }}>
+            <FormStyled onSubmit={bookSeats}>
                 <label htmlFor="name">Nome do comprador: </label>
                 <input
                     type="text"
@@ -132,6 +149,7 @@ const FormStyled = styled.form`
         }
     }
     button{
+        color:#FFFFFF;
         margin: 10px auto 0px;
         width: 225px;
         height: 42px;
@@ -139,5 +157,6 @@ const FormStyled = styled.form`
         right:0;
         background: #E8833A;
         border-radius: 3px;
+        border-color: #E8833A;
     }
 `
