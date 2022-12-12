@@ -1,21 +1,27 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 import Loading from "../components/Loading"
 
 export default function MoviePage() {
-    const [listMovies,setListMovies] = useState(undefined)
-    useEffect(()=>{
+    const [listMovies, setListMovies] = useState(undefined)
+    useEffect(() => {
         axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
             .then((res) => setListMovies(res.data))
-    },[])
+    }, [])
 
-    if (listMovies=== undefined) return <Loading/>
+    if (listMovies === undefined) return <Loading />
     return (
-    <>
-        <h1>Selecione o filme</h1>
-        <ConteinerMovies>{listMovies.map((m) => <div key={m.id}> <img src={m.posterURL} alt={m.title} /></div> )}</ConteinerMovies>
-    </>
+        <>
+            <h1>Selecione o filme</h1>
+            <ConteinerMovies>{listMovies.map((m) => (
+                <Link to={`/sessoes/${m.id}`} key={m.id}>
+                    <div>
+                        <img src={m.posterURL} alt={m.title} />
+                    </div>
+                </Link>))}</ConteinerMovies>
+        </>
     )
 }
 

@@ -26,7 +26,6 @@ const TopBar = styled.div`
   justify-content:center;
   align-items:center;
   position:sticky;
-  font-family: 'Roboto', Helvetica, sans-serif;
   background-color:${LIGHTGRAY};
   font-style: normal;
   font-weight: 400;
