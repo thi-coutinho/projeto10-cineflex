@@ -156,6 +156,7 @@ const FormStyled = styled.form`
         }
     }
     button{
+        font-size:18px;
         color:#FFFFFF;
         margin: 10px auto 0px;
         width: 225px;

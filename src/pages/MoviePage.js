@@ -9,6 +9,7 @@ export default function MoviePage({setMovieInfo}) {
     useEffect(() => {
         axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
             .then((res) => setListMovies(res.data))
+        setMovieInfo(undefined)
     }, [])
 
     if (listMovies === undefined) return <Loading />

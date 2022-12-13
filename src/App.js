@@ -1,18 +1,16 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { useState } from "react"
-
-import styled from "styled-components";
-import { LIGHTGRAY } from "./constants/COLORS";
 import MoviePage from "./pages/MoviePage";
 import SeatPage from "./pages/SeatPage";
 import SessionPage from "./pages/SessionPage";
 import SuccessPage from "./pages/SuccessPage";
+import TopMenu from "./components/TopMenu";
 
 export default function App() {
   const [movieInfo,setMovieInfo] = useState(undefined)
   return (
     <BrowserRouter>
-      <TopBar>CINEFLEX</TopBar>
+      <TopMenu movieInfo={movieInfo}/>
       <Routes>
         <Route path="/" element={<MoviePage setMovieInfo={setMovieInfo}/>} />
         <Route path="/sessoes/:idMovie" element={<SessionPage movieInfo={movieInfo} setMovieInfo={setMovieInfo} />} />
@@ -22,18 +20,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-
-const TopBar = styled.div`
-  height: 67px;
-  display: flex;
-  justify-content:center;
-  align-items:center;
-  position:sticky;
-  top:0;
-  background-color:${LIGHTGRAY};
-  font-style: normal;
-  font-weight: 400;
-  font-size: 34px;
-  line-height: 40px;
-  color: #E8833A;
-`
