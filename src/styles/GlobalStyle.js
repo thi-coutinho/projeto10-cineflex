@@ -1,25 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-*{
-	box-sizing:border-box;
-	font-family: 'Roboto', Helvetica, sans-serif;
-}
-h1 {
-	color: #293845;
-	margin:30px auto;
-	width:auto;
-	height:auto;
-	justify-content:center;
-	font-style: normal;
-	font-weight: 400;
-	font-size: 24px;
-	line-height: 28px;
-	display: flex;
-	align-items: center;
-	letter-spacing: 0.04em;
-} 
-
 html, body, div, span, applet, object, iframe,
 h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -63,5 +44,23 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+div, h1, form, input, button {
+	box-sizing:border-box;
+	font-family: 'Roboto', Helvetica, sans-serif;
+}
+h1 {
+	color: #293845;
+	margin:30px auto;
+	width:auto;
+	height:auto;
+	justify-content:center;
+	font-style: normal;
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 28px;
+	display: flex;
+	align-items: center;
+	letter-spacing: 0.04em;
+} 
 `
 export default GlobalStyle

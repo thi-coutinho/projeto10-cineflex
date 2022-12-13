@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import Loading from "../components/Loading"
 
-export default function MoviePage() {
+export default function MoviePage({setMovieInfo}) {
     const [listMovies, setListMovies] = useState(undefined)
     useEffect(() => {
         axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
@@ -16,7 +16,7 @@ export default function MoviePage() {
         <>
             <h1>Selecione o filme</h1>
             <ConteinerMovies>{listMovies.map((m) => (
-                <Link to={`/sessoes/${m.id}`} key={m.id}>
+                <Link to={`/sessoes/${m.id}`} onClick={()=>setMovieInfo({movieTitle:m.title,movieURL:m.posterURL})} key={m.id}>
                     <div>
                         <img src={m.posterURL} alt={m.title} />
                     </div>

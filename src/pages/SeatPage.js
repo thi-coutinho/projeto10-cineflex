@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
+import Footer from "../components/Footer"
 import Loading from "../components/Loading"
 import { LIGHTGRAY, LIGHTYELLOW, DARKGRAY, DARKYELLOW, LIGHTGREEN } from "../constants/COLORS"
 
@@ -17,11 +18,6 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSession}/seats`)
             .then(res => {
                 seatSeats(res.data.seats)
-                const weekday = res.data.day.weekday
-                const date = res.data.day.date
-                const sessionTime = res.data.name
-                const movieTitle = res.data.movie.title
-                setMovieInfo({ movieTitle, weekday, sessionTime, date })
             })
             .catch(console.log)
     }, [])
@@ -92,6 +88,7 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
                 />
                 <button>Reservar assentos</button>
             </FormStyled>
+            <Footer movieInfo={movieInfo}/>
         </>
     )
 }

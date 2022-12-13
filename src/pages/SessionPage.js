@@ -2,9 +2,10 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
+import Footer from "../components/Footer"
 import Loading from "../components/Loading"
 
-export default function SessionPage() {
+export default function SessionPage({ movieInfo, setMovieInfo }) {
     const [sessions, setSessions] = useState(undefined)
     const { idMovie } = useParams()
     const navigate = useNavigate()
@@ -15,6 +16,7 @@ export default function SessionPage() {
                 setSessions(res.data)
             })
             .catch(console.log)
+        setMovieInfo({movieTitle:movieInfo.movieTitle,movieURL:movieInfo.movieURL})
     }, [])
 
     if (sessions === undefined) return <Loading />
@@ -25,12 +27,20 @@ export default function SessionPage() {
                 <Session key={d.id}>
                     <div>{`${d.date} - ${d.weekday}`}</div>
                     <div>{d.showtimes.map((s) => (
-                        <button key={s.id} onClick={()=>navigate(`/assentos/${s.id}`)}>{s.name}</button>
+                        <button key={s.id}
+                            onClick={() => {
+                                const weekday = d.weekday
+                                const date = d.date
+                                const sessionTime = s.name
+                                setMovieInfo({...movieInfo,sessionTime,date,weekday})
+                                navigate(`/assentos/${s.id}`)}}
+                        >{s.name}</button>
                     ))}
                     </div>
                 </Session>
             ))}
             </ul>
+            <Footer movieInfo={movieInfo}></Footer>
         </>
     )
 }

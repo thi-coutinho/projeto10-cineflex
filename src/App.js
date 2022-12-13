@@ -14,8 +14,8 @@ export default function App() {
     <BrowserRouter>
       <TopBar>CINEFLEX</TopBar>
       <Routes>
-        <Route path="/" element={<MoviePage />} />
-        <Route path="/sessoes/:idMovie" element={<SessionPage />} />
+        <Route path="/" element={<MoviePage setMovieInfo={setMovieInfo}/>} />
+        <Route path="/sessoes/:idMovie" element={<SessionPage movieInfo={movieInfo} setMovieInfo={setMovieInfo} />} />
         <Route path="/assentos/:idSession" element={<SeatPage movieInfo={movieInfo} setMovieInfo={setMovieInfo} />} />
         <Route path="/sucesso" element={<SuccessPage  movieInfo={movieInfo}/>} />
       </Routes>
@@ -29,6 +29,7 @@ const TopBar = styled.div`
   justify-content:center;
   align-items:center;
   position:sticky;
+  top:0;
   background-color:${LIGHTGRAY};
   font-style: normal;
   font-weight: 400;
