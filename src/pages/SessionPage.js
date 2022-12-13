@@ -16,37 +16,41 @@ export default function SessionPage({ movieInfo, setMovieInfo }) {
                 setSessions(res.data)
             })
             .catch(console.log)
-        setMovieInfo({movieTitle:movieInfo.movieTitle,movieURL:movieInfo.movieURL})
+        setMovieInfo({ movieTitle: movieInfo.movieTitle, movieURL: movieInfo.movieURL })
     }, [])
 
     if (sessions === undefined) return <Loading />
     return (
-        <Main>
-            <h1>Selecione o horário</h1>
-            <ul>{sessions.days.map((d) => (
-                <Session key={d.id}>
-                    <div>{`${d.date} - ${d.weekday}`}</div>
-                    <div>{d.showtimes.map((s) => (
-                        <button key={s.id}
-                            onClick={() => {
-                                const weekday = d.weekday
-                                const date = d.date
-                                const sessionTime = s.name
-                                setMovieInfo({...movieInfo,sessionTime,date,weekday})
-                                navigate(`/assentos/${s.id}`)}}
-                        >{s.name}</button>
-                    ))}
-                    </div>
-                </Session>
-            ))}
-            </ul>
+        <>
+            <Main>
+                <h1>Selecione o horário</h1>
+                <ul>{sessions.days.map((d) => (
+                    <Session data-test="movie-day" key={d.id}>
+                        <div>{`${d.date} - ${d.weekday}`}</div>
+                        <div>{d.showtimes.map((s) => (
+                            <button data-test="showtime" key={s.id}
+                                onClick={() => {
+                                    const weekday = d.weekday
+                                    const date = d.date
+                                    const sessionTime = s.name
+                                    setMovieInfo({ ...movieInfo, sessionTime, date, weekday })
+                                    navigate(`/assentos/${s.id}`)
+                                }}
+                            >{s.name}</button>
+                        ))}
+                        </div>
+                    </Session>
+                ))}
+                </ul>
+            </Main>
             <Footer movieInfo={movieInfo}></Footer>
-        </Main>
+        </>
     )
 }
 
 const Main = styled.div`
     height:100%;
+    margin-bottom:140px;
 `
 
 const Session = styled.li`

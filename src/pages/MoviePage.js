@@ -17,7 +17,7 @@ export default function MoviePage({setMovieInfo}) {
             <h1>Selecione o filme</h1>
             <ConteinerMovies>{listMovies.map((m) => (
                 <Link to={`/sessoes/${m.id}`} onClick={()=>setMovieInfo({movieTitle:m.title,movieURL:m.posterURL})} key={m.id}>
-                    <div>
+                    <div data-test="movie">
                         <img src={m.posterURL} alt={m.title} />
                     </div>
                 </Link>))}</ConteinerMovies>

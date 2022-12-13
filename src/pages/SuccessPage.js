@@ -2,20 +2,24 @@ import styled from "styled-components"
 import { Link } from "react-router-dom";
 export default function SuccessPage({ movieInfo }) {
     let cpf = movieInfo.cpf.toString()
-    cpf = cpf.length !== 11 ? cpf : cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"); 
+    cpf = cpf.length !== 11 ? cpf : cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
     return (
         <>
             <Greennh1>Pedido feito com sucesso</Greennh1>
-            <SessionMovieInfo>
+            <SessionMovieInfo data-test="movie-info">
                 <SessionTitle>Filme e Sessão</SessionTitle>
                 <div>{movieInfo.movieTitle}</div>
                 <div>{movieInfo.date} - {movieInfo.sessionTime} </div>
+            </SessionMovieInfo>
+            <SessionMovieInfo data-test="seats-info">
                 <SessionTitle>Ingressos</SessionTitle>
                 {movieInfo.seatsNumbers.map(s => <div key={s}>Assento {s}</div>)}
+            </SessionMovieInfo>
+            <SessionMovieInfo data-test="client-info">
                 <SessionTitle>Comprador</SessionTitle>
                 <div>Nome: {movieInfo.name}</div>
                 <div>CPF: {cpf}</div>
-                <Link to="/"><>Voltar pra Home</></Link>
+                <Link data-test="go-home-btn" to="/"><>Voltar pra Home</></Link>
             </SessionMovieInfo>
 
         </>
@@ -42,7 +46,7 @@ const SessionMovieInfo = styled.div`
         justify-content:center;
         align-items:center;
         text-decoration:none;
-        margin: 100px auto 0px;
+        margin: 100px auto 30px;
         width: 225px;
         height: 42px;
         left:0;

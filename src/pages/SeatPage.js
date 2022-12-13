@@ -24,7 +24,10 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
     if (seats === undefined) return <Loading />
 
     function seatSelection(seat) {
-        if (!seat.isAvailable) return
+        if (!seat.isAvailable) {
+            alert("Esse assento não está disponível")
+            return
+        }
         if (selected.includes(seat.id)) {
             setSelected([...selected].filter(i => i !== seat.id))
         } else {
@@ -50,7 +53,7 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
         <Main>
             <h1>Selecione o(s) assento(s)</h1>
             <ConteinerSeats columns={10}>{seats.map((s) => (
-                <Seat key={s.id} onClick={(e) => seatSelection(s)} selected={selected.includes(s.id)} available={s.isAvailable}>{s.name}</Seat>
+                <Seat data-test="seat" key={s.id} onClick={(e) => seatSelection(s)} selected={selected.includes(s.id)} available={s.isAvailable}>{s.name}</Seat>
             ))}</ConteinerSeats>
 
             <LegendSeats columns={8}>
@@ -70,6 +73,7 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
             <FormStyled onSubmit={bookSeats}>
                 <label htmlFor="name">Nome do comprador: </label>
                 <input
+                    data-test="client-name"
                     type="text"
                     id="name"
                     placeholder="Digite seu nome..."
@@ -79,14 +83,15 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
                 />
                 <label htmlFor="cpf">CPF do comprador: </label>
                 <input
-                    type="text"
+                    data-test="client-cpf"
+                    type="number"
                     id="cpf"
                     placeholder="Digite seu CPF..."
                     value={cpf}
                     onChange={e => setCpf(e.target.value)}
                     required
                 />
-                <button>Reservar assentos</button>
+                <button data-test="book-seat-btn">Reservar assentos</button>
             </FormStyled>
             <Footer movieInfo={movieInfo}/>
         </Main>
@@ -94,6 +99,7 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
 }
 const Main = styled.div`
     height:100%;
+    padding-bottom:140px;
 `
 
 const Seat = styled.button`
@@ -108,8 +114,9 @@ const Seat = styled.button`
 `
 
 const ConteinerSeats = styled.div`
+    padding:0 20px;
     margin-top:16px;
-    max-width: calc(36px * ${props => props.columns} + 7px * ${props => props.columns - 1});
+    max-width: calc(36px * ${props => props.columns} + 7px * ${props => props.columns - 1} + 40px);
     margin: 20px auto;
     display: flex;
     flex-wrap: wrap;

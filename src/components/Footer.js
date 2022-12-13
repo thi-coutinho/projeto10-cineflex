@@ -3,7 +3,7 @@ import { LIGHTGRAY} from "../constants/COLORS"
 
 export default function Footer({movieInfo}){
     return (
-        <FooterDiv>
+        <FooterDiv data-test="footer">
             <MoviePoster>
                 <img src={movieInfo.movieURL} alt={movieInfo.movieTitle} />
             </MoviePoster>
@@ -16,10 +16,11 @@ export default function Footer({movieInfo}){
 }
 
 const FooterDiv = styled.div`
+    width:100vw;
     height:117px;
     display: flex;
     align-items:center;
-    position:sticky;
+    position:fixed;
     bottom:0;
     background-color:${LIGHTGRAY};
     font-style: normal;
