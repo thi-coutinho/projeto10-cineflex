@@ -47,7 +47,7 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
     }
 
     return (
-        <>
+        <Main>
             <h1>Selecione o(s) assento(s)</h1>
             <ConteinerSeats columns={10}>{seats.map((s) => (
                 <Seat key={s.id} onClick={(e) => seatSelection(s)} selected={selected.includes(s.id)} available={s.isAvailable}>{s.name}</Seat>
@@ -89,9 +89,12 @@ export default function SeatPage({ movieInfo, setMovieInfo }) {
                 <button>Reservar assentos</button>
             </FormStyled>
             <Footer movieInfo={movieInfo}/>
-        </>
+        </Main>
     )
 }
+const Main = styled.div`
+    height:100%;
+`
 
 const Seat = styled.button`
     width: 36px;

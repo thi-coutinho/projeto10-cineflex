@@ -24,10 +24,13 @@ const FooterDiv = styled.div`
     background-color:${LIGHTGRAY};
     font-style: normal;
     font-weight: 400;
-    font-size: 26px;
+    font-size: 20px;
     line-height: 40px;
     color: #293845;
     gap:14px;
+    div {
+        font-size: 20px;
+    }
 `
 const MoviePoster = styled.div`
     margin-left:10px;

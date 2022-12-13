@@ -21,7 +21,7 @@ export default function SessionPage({ movieInfo, setMovieInfo }) {
 
     if (sessions === undefined) return <Loading />
     return (
-        <>
+        <Main>
             <h1>Selecione o horário</h1>
             <ul>{sessions.days.map((d) => (
                 <Session key={d.id}>
@@ -41,9 +41,13 @@ export default function SessionPage({ movieInfo, setMovieInfo }) {
             ))}
             </ul>
             <Footer movieInfo={movieInfo}></Footer>
-        </>
+        </Main>
     )
 }
+
+const Main = styled.div`
+    height:100%;
+`
 
 const Session = styled.li`
     font-style: normal;
